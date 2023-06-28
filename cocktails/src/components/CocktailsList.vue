@@ -9,7 +9,8 @@ onMounted(async() => {
   cocktails.value = cocktails.value.drinks.map(drink => {
     return {
       name:drink.strDrink,
-      image:drink.strDrinkThumb
+      image:drink.strDrinkThumb,
+      id:drink.idDrink
     }
   } );
 })
@@ -18,11 +19,12 @@ onMounted(async() => {
 <template>
   <h1 class = "centre" >Cocktails</h1>
   <div class = "row" v-if="cocktails">
-      <div v-for="cocktail in cocktails" class="card col-md-4 m-2" style="width: 18rem;">
-          <a href=""><img class="card-img-top" :src=cocktail.image alt="Card image cap"></a>
-          <div class="card-body">
-          <h5 class="card-title">{{cocktail.name}}</h5>
-          </div>
+      <div  v-for="cocktail in cocktails" class="card col-md-4 m-2" style="width: 18rem;">
+            <router-link :to="{ name: 'Detail', params: { id: cocktail.id } }">Go to Detail</router-link>
+            <a href=""><img class="card-img-top" :src=cocktail.image alt="Card image cap"></a>
+            <div class="card-body">
+            <h5 class="card-title">{{cocktail.name}}</h5>
+            </div>
         </div>
   </div>
 </template>
