@@ -1,19 +1,39 @@
-<script>
-    import { ref, onMounted } from 'vue'
-    import { defineProps } from 'vue';
-    onMounted(async() => {
-        const props = defineProps(['id']);
-        console.log(props)
-        const routeArgs = window.location.href.split('/')
-        const cocktailId = routeArgs[routeArgs.length - 1]
-        const url = "https://www.thecocktaildb.com/api/json/v1/1/lookup.php?i=" + cocktailId
-        const response = await fetch(url)
-        console.log(response)
-    })
+<script setup>
+import { ref, onMounted } from 'vue';
+
+const props = defineProps(['id']);
+
+const cocktail = ref(null);
+
+onMounted(async () => {
+    console.log(props.id); // this should log the id passed as prop
+    const url = `https://www.thecocktaildb.com/api/json/v1/1/lookup.php?i=${props.id}`;
+    const response = await fetch(url);
+    const data = await response.json();
+    const responseDrink = data.drinks[0]
+    console.log(data)
+    const ingredients = Object
+        .entries(responseDrink)
+        .filter(([key, value]) => key.startsWith('strIngredient') && value !== null)
+        .map(([, value]) => value);
+    const measures = Object
+        .entries(responseDrink)
+        .filter(([key, value]) => key.startsWith('strMeasure') && value !== null)
+        .map(([, value]) => value);
+    cocktail.value = {
+        ingredients,
+        name: responseDrink.strDrink,
+        glass: responseDrink.strGlass,
+        description: responseDrink.strInstructions,
+        category: responseDrink.strCategory,
+
+    }
+});
 </script>
 
-
-
 <template>
-
+    <div v-if="cocktail">
+        <h1>{{ cocktail.name }}</h1>
+        
+    </div>
 </template>
