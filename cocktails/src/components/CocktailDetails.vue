@@ -14,12 +14,15 @@ onMounted(async () => {
     console.log(data)
     const ingredients = Object
         .entries(responseDrink)
-        .filter(([key, value]) => key.startsWith('strIngredient') && value !== null)
-        .map(([, value]) => value);
-    const measures = Object
-        .entries(responseDrink)
-        .filter(([key, value]) => key.startsWith('strMeasure') && value !== null)
-        .map(([, value]) => value);
+        .filter(([key, value]) => key.startsWith('strIngredient')&& value !== null)
+        .map(([key, value]) =>  {
+            const number = key.replace('strIngredient', '');
+            const measure = responseDrink[`strMeasure${number}`]
+            if(measure === null){
+                return value
+            }
+            return `${measure} ${value}`
+        });
     cocktail.value = {
         ingredients,
         name: responseDrink.strDrink,
@@ -34,6 +37,10 @@ onMounted(async () => {
 <template>
     <div v-if="cocktail">
         <h1>{{ cocktail.name }}</h1>
-        
+        <ul>
+            <li v-for="ingredient in cocktail.ingredients">
+                    {{ingredient}}
+            </li>
+        </ul>
     </div>
 </template>

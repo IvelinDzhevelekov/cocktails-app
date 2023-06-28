@@ -20,8 +20,9 @@ onMounted(async() => {
   <h1 class = "centre" >Cocktails</h1>
   <div class = "row" v-if="cocktails">
       <div  v-for="cocktail in cocktails" class="card col-md-4 m-2" style="width: 18rem;">
-            <router-link :to="{ name: 'Detail', params: { id: cocktail.id } }">Go to Detail</router-link>
+            <router-link :to="{ name: 'Detail', params: { id: cocktail.id } }">
             <a href=""><img class="card-img-top" :src=cocktail.image alt="Card image cap"></a>
+            </router-link>
             <div class="card-body">
             <h5 class="card-title">{{cocktail.name}}</h5>
             </div>
