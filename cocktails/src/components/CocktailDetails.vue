@@ -29,6 +29,7 @@ onMounted(async () => {
         glass: responseDrink.strGlass,
         description: responseDrink.strInstructions,
         category: responseDrink.strCategory,
+        image: responseDrink.strDrinkThumb,
 
     }
 });
@@ -36,11 +37,38 @@ onMounted(async () => {
 
 <template>
     <div v-if="cocktail">
-        <h1>{{ cocktail.name }}</h1>
-        <ul>
-            <li v-for="ingredient in cocktail.ingredients">
+        <h1 class="text-center">{{ cocktail.name }}</h1>
+        <img id="image" :src="cocktail.image" class="position-absolute">
+        <h5 id="listHead" class="text-center">Ingredients</h5>
+        <ul id="ingredients" class="list-group">
+            <li class="list-group-item" v-for="ingredient in cocktail.ingredients">
                     {{ingredient}}
             </li>
         </ul>
+        <h5 class="text-center">Instructions</h5>
+        <p id="des" class="border rounded">{{ cocktail.description }}</p>
     </div>
+    
 </template>
+
+<style>
+#image{
+    margin-top: 3pc;
+    margin-left: 3pc;
+    width: 20pc;
+    height: 20pc;
+    border-radius: 2pc;
+}
+#ingredients{
+    margin-left: 39pc;
+    margin-top: 1pc;
+    margin-right: 20pc;
+}
+#listHead{
+    margin-top: 4pc;
+}
+#des{
+    margin-left: 39pc;
+    width: 27pc;
+}
+</style>
