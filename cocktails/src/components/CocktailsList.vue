@@ -25,5 +25,7 @@
 </template>
 
 <style>
-
+div{
+    overflow-x: hidden;
+}
 </style>
